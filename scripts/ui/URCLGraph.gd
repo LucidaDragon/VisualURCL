@@ -33,9 +33,12 @@ var node_templates: Array[URCLGraphNode] = []
 @onready var emulator: Window = $"../../../Popups/Emulator"
 var control_buttons: int = 0
 var pan_speed: float = 1000
+var instructions_per_tick: int = 1
 var toolbar: HBoxContainer = get_zoom_hbox()
 var code_button: Button = Button.new()
 var run_button: Button = Button.new()
+var tps_label: Label = Label.new()
+var tps_update_cooldown: float = 0.0
 var code_machine: URCLMachine = URCLMachine.new()
 var code_update_cooldown: float = -1.0
 var selected_nodes: Array[GraphNode] = []
@@ -43,6 +46,7 @@ var variables: Array[Variable] = []
 var next_label: int = 0
 
 func _init():
+	code_machine.suspend()
 	_init_buttons()
 	connect("node_selected", func(node):
 		if node is GraphNode: selected_nodes.append(node)
@@ -98,6 +102,7 @@ func _init_buttons() -> void:
 	
 	toolbar.add_child(code_button)
 	toolbar.add_child(run_button)
+	toolbar.add_child(tps_label)
 
 func _init_nodes() -> void:
 	const path = "res://nodes/"
@@ -150,7 +155,17 @@ func _process(delta):
 		code_update_cooldown = max(0.0, code_update_cooldown - delta)
 		if code_update_cooldown == 0.0: _update_code()
 	
-	code_machine.step()
+	tps_label.visible = not code_machine.suspended
+	tps_update_cooldown = max(0.0, tps_update_cooldown - delta)
+	if tps_update_cooldown == 0.0:
+		tps_label.text = str(round((instructions_per_tick * delta) * 100) / 100.0) + " tps"
+		tps_update_cooldown = 5.0
+	
+	if not code_machine.suspended:
+		if delta > 0.16 and instructions_per_tick > 1: instructions_per_tick -= 1
+		elif delta < 0.16: instructions_per_tick += 1
+	
+		for _i in range(instructions_per_tick): code_machine.step()
 
 func _update_code() -> void:
 	code_machine = URCLMachine.new()
