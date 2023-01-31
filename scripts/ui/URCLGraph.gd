@@ -156,19 +156,23 @@ func _process(delta):
 		if code_update_cooldown == 0.0: _update_code()
 	
 	tps_label.visible = not code_machine.suspended
-	tps_update_cooldown = max(0.0, tps_update_cooldown - delta)
-	if tps_update_cooldown == 0.0:
-		tps_label.text = str(round((instructions_per_tick * delta) * 100) / 100.0) + " tps"
-		tps_update_cooldown = 5.0
+	tps_label.text = str(round((instructions_per_tick * delta) * 100) / 100.0).pad_decimals(2) + " ips / " + str(instructions_per_tick) + " ipt / " + str(round(Engine.get_frames_per_second() * 100) / 100) + " fps"
 	
 	if not code_machine.suspended:
-		if delta > 0.16 and instructions_per_tick > 1: instructions_per_tick -= 1
-		elif delta < 0.16: instructions_per_tick += 1
-	
+		tps_update_cooldown = max(0.0, tps_update_cooldown - delta)
+		if tps_update_cooldown == 0.0:
+			tps_update_cooldown = 0.5
+			var frames = Engine.get_frames_per_second()
+			if frames < 5 and instructions_per_tick > 1: instructions_per_tick /= 2
+			elif frames < 15 and instructions_per_tick > 1: instructions_per_tick -= 1
+			elif frames > 60: instructions_per_tick *= 2
+			elif frames > 15: instructions_per_tick += 1
+		
 		for _i in range(instructions_per_tick): code_machine.step()
 
 func _update_code() -> void:
 	code_machine = URCLMachine.new()
+	code_machine.suspend()
 	emulator.bind_drivers(code_machine)
 	reset_labels()
 	for node in get_children(): node.update_labels()
