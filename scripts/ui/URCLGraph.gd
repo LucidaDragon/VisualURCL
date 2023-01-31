@@ -105,6 +105,7 @@ func _init_nodes() -> void:
 	directory.list_dir_begin()
 	var file = directory.get_next()
 	while file != "":
+		if file.ends_with(".tscn.remap"): file = file.substr(0, len(file) - 6)
 		if not directory.current_is_dir() and file.ends_with(".tscn"):
 			var node: URCLGraphNode = load(path + file).instantiate()
 			node.apply_style()
