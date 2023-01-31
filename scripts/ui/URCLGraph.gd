@@ -165,7 +165,7 @@ func _process(delta):
 			var frames = Engine.get_frames_per_second()
 			if frames < 5 and instructions_per_tick > 1: instructions_per_tick /= 2
 			elif frames < 15 and instructions_per_tick > 1: instructions_per_tick -= 1
-			elif frames > 60: instructions_per_tick *= 2
+			elif frames >= 60: instructions_per_tick *= 2
 			elif frames > 15: instructions_per_tick += 1
 		
 		for _i in range(instructions_per_tick): code_machine.step()
