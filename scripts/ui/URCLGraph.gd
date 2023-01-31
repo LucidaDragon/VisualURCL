@@ -31,6 +31,8 @@ var node_templates: Array[URCLGraphNode] = []
 @onready var code_box: CodeEdit = $"../../CodeEdit"
 @onready var node_menu: NodeMenu = $"../../../Popups/NodeMenu"
 @onready var emulator: Window = $"../../../Popups/Emulator"
+var control_buttons: int = 0
+var pan_speed: float = 1000
 var toolbar: HBoxContainer = get_zoom_hbox()
 var code_button: Button = Button.new()
 var run_button: Button = Button.new()
@@ -128,7 +130,21 @@ func _init_node_menu() -> void:
 			add_node(template, true)
 		)
 
+func _input(event):
+	if event is InputEventKey:
+		var mask: int = 0
+		if event.keycode == KEY_UP: mask = 1
+		elif event.keycode == KEY_DOWN: mask = 2
+		elif event.keycode == KEY_RIGHT: mask = 4
+		elif event.keycode == KEY_LEFT: mask = 8
+		if event.pressed and Input.is_key_pressed(KEY_CTRL): control_buttons |= mask
+		else: control_buttons &= ~mask
+
 func _process(delta):
+	if control_buttons != 0:
+		var direction = ((Vector2(0, -1) if control_buttons & 1 else Vector2.ZERO) + (Vector2(0, 1) if control_buttons & 2 else Vector2.ZERO) + (Vector2(1, 0) if control_buttons & 4 else Vector2.ZERO) + (Vector2(-1, 0) if control_buttons & 8 else Vector2.ZERO)).normalized()
+		scroll_offset += direction * pan_speed * zoom * delta
+	
 	if code_update_cooldown > 0.0:
 		code_update_cooldown = max(0.0, code_update_cooldown - delta)
 		if code_update_cooldown == 0.0: _update_code()
