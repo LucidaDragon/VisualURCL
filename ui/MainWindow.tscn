@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://doxn2r26dt70c"]
+
+[ext_resource type="Script" path="res://scripts/ui/ScreenAwareSplitter.gd" id="1_jlfhh"]
+[ext_resource type="PackedScene" uid="uid://b7nvanr273851" path="res://ui/PropertyPane.tscn" id="2_0wub2"]
+[ext_resource type="Script" path="res://scripts/ui/URCLGraph.gd" id="2_g44i8"]
+[ext_resource type="PackedScene" uid="uid://bu4eftrp0jjjb" path="res://ui/NodeMenu.tscn" id="3_vxtnu"]
+[ext_resource type="PackedScene" uid="uid://cbav8blxpc4gi" path="res://ui/EmulatorWindow.tscn" id="5_ughqk"]
+
+[node name="Window" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CodeSplitter" type="HSplitContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+collapsed = true
+dragger_visibility = 2
+script = ExtResource("1_jlfhh")
+initial_split = 0.1
+
+[node name="CodeEdit" type="CodeEdit" parent="CodeSplitter"]
+offset_right = 8.0
+offset_bottom = 960.0
+editable = false
+
+[node name="PropertySplitter" type="HSplitContainer" parent="CodeSplitter"]
+offset_left = 8.0
+offset_right = 1280.0
+offset_bottom = 960.0
+script = ExtResource("1_jlfhh")
+
+[node name="GraphEdit" type="GraphEdit" parent="CodeSplitter/PropertySplitter"]
+offset_bottom = 960.0
+script = ExtResource("2_g44i8")
+
+[node name="PropertyPane" parent="CodeSplitter/PropertySplitter" instance=ExtResource("2_0wub2")]
+offset_left = 12.0
+offset_right = 1272.0
+offset_bottom = 960.0
+
+[node name="Popups" type="CanvasLayer" parent="."]
+
+[node name="NodeMenu" parent="Popups" instance=ExtResource("3_vxtnu")]
+visible = false
+
+[node name="Emulator" parent="Popups" instance=ExtResource("5_ughqk")]
+position = Vector2i(50, 50)

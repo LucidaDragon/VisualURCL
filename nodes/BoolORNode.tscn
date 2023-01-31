@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5r0rlhninx5s"]
+
+[ext_resource type="Script" path="res://scripts/nodes/BoolORNode.gd" id="1_rx1uv"]
+
+[node name="BoolORNode" type="GraphNode"]
+script = ExtResource("1_rx1uv")

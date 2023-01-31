@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4n66hv4b44f7"]
+
+[ext_resource type="Script" path="res://scripts/nodes/TrueNode.gd" id="1_radot"]
+
+[node name="TrueNode" type="GraphNode"]
+script = ExtResource("1_radot")

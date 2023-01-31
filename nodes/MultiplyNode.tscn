@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/nodes/MultiplyNode.gd" id="1_kgmrd"]
+
+[node name="MultiplyNode" type="GraphNode"]
+script = ExtResource("1_kgmrd")

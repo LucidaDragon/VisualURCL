@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://btueurt4y77rn"]
+
+[ext_resource type="Script" path="res://scripts/nodes/IsEqualNode.gd" id="1_ygec0"]
+
+[node name="IsEqualNode" type="GraphNode"]
+script = ExtResource("1_ygec0")

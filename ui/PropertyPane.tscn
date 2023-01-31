@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7nvanr273851"]
+
+[ext_resource type="Script" path="res://scripts/ui/PropertyPane.gd" id="1_iq1eo"]
+
+[node name="PropertyPane" type="PanelContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_iq1eo")
+
+[node name="Scroll" type="ScrollContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Arrangement" type="VBoxContainer" parent="Scroll"]
+offset_right = 111.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+
+[node name="AddButton" type="Button" parent="Scroll/Arrangement"]
+offset_right = 111.0
+offset_bottom = 31.0
+focus_mode = 0
+text = "New Variable"

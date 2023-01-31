@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://bu4eftrp0jjjb"]
+
+[ext_resource type="Script" path="res://scripts/ui/NodeMenu.gd" id="1_mbs4u"]
+
+[node name="NodeMenu" type="PanelContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_mbs4u")
+
+[node name="Split" type="VBoxContainer" parent="."]
+offset_right = 67.0
+offset_bottom = 40.0
+
+[node name="SearchBox" type="LineEdit" parent="Split"]
+offset_right = 67.0
+offset_bottom = 31.0
+placeholder_text = "Search"
+
+[node name="Scroll" type="ScrollContainer" parent="Split"]
+offset_top = 35.0
+offset_right = 67.0
+offset_bottom = 40.0
+size_flags_vertical = 3
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="Categories" type="VBoxContainer" parent="Split/Scroll"]
+offset_right = 67.0
+size_flags_horizontal = 3

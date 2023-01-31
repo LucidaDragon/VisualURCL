@@ -1,0 +1,110 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbav8blxpc4gi"]
+
+[ext_resource type="Script" path="res://scripts/ui/EmulatorWindow.gd" id="1_vwp2n"]
+
+[node name="Emulator" type="Window"]
+title = "Emulator"
+size = Vector2i(640, 480)
+visible = false
+transient = true
+script = ExtResource("1_vwp2n")
+
+[node name="TabContainer" type="TabContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Console" type="VBoxContainer" parent="TabContainer"]
+layout_mode = 2
+
+[node name="TextOut" type="TextEdit" parent="TabContainer/Console"]
+layout_mode = 2
+size_flags_vertical = 3
+editable = false
+draw_control_chars = true
+scroll_past_end_of_file = true
+
+[node name="TextIn" type="LineEdit" parent="TabContainer/Console"]
+layout_mode = 2
+
+[node name="Display" type="VBoxContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="TabContainer/Display"]
+layout_mode = 2
+
+[node name="WidthSpinBox" type="SpinBox" parent="TabContainer/Display/HBox"]
+layout_mode = 2
+min_value = 1.0
+max_value = 4000.0
+value = 1.0
+
+[node name="Label" type="Label" parent="TabContainer/Display/HBox"]
+layout_mode = 2
+text = "x"
+
+[node name="HeightSpinBox" type="SpinBox" parent="TabContainer/Display/HBox"]
+layout_mode = 2
+min_value = 1.0
+max_value = 4000.0
+value = 1.0
+
+[node name="AutoSizeButton" type="CheckButton" parent="TabContainer/Display/HBox"]
+layout_mode = 2
+focus_mode = 0
+button_pressed = true
+text = "Auto Size"
+
+[node name="Spacing" type="Control" parent="TabContainer/Display/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorMenu" type="OptionButton" parent="TabContainer/Display/HBox"]
+layout_mode = 2
+focus_mode = 0
+item_count = 17
+selected = 16
+popup/item_0/text = "Monochrome"
+popup/item_0/id = 0
+popup/item_1/text = "2-bit Grayscale"
+popup/item_1/id = 1
+popup/item_2/text = "3-bit Grayscale"
+popup/item_2/id = 2
+popup/item_3/text = "4-bit Grayscale"
+popup/item_3/id = 3
+popup/item_4/text = "5-bit Grayscale"
+popup/item_4/id = 4
+popup/item_5/text = "6-bit Grayscale"
+popup/item_5/id = 5
+popup/item_6/text = "7-bit Grayscale"
+popup/item_6/id = 6
+popup/item_7/text = "8-bit Grayscale"
+popup/item_7/id = 7
+popup/item_8/text = "3-bit RGB"
+popup/item_8/id = 8
+popup/item_9/text = "4-bit RGBI"
+popup/item_9/id = 9
+popup/item_10/text = "6-bit RGB"
+popup/item_10/id = 10
+popup/item_11/text = "8-bit RGB"
+popup/item_11/id = 11
+popup/item_12/text = "9-bit RGB"
+popup/item_12/id = 12
+popup/item_13/text = "15-bit RGB"
+popup/item_13/id = 13
+popup/item_14/text = "16-bit RGB"
+popup/item_14/id = 14
+popup/item_15/text = "18-bit RGB"
+popup/item_15/id = 15
+popup/item_16/text = "24-bit RGB"
+popup/item_16/id = 16
+
+[node name="Aspect" type="AspectRatioContainer" parent="TabContainer/Display"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Texture" type="TextureRect" parent="TabContainer/Display/Aspect"]
+layout_mode = 2
